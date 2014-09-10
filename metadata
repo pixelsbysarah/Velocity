@@ -1,3 +1,30 @@
+#* *****************
+
+Index Block Settings
+
+Index Type: Folder Index
+Index Folder: None selected
+Depth of Index: 0
+Max Rendered Assets: 1
+Index Block Assets: No
+Index File Assets: No
+Index Page Assets: Yes
+Index Link Assets: No
+Rendering Behavior: Start at the current page and include its folder hierarchy
+Page XML: Render page XML inline
+Block XML: No
+Regular Content: Yes
+System Metadata: No
+User Metadata: Yes
+Folder Access Rights:No
+User Information: No
+Workflow Information: No
+Append Calling Page Data: Yes
+Sort Method: Folder Order
+Sort Order: Ascending
+
+***************** *#
+
 #set ( $defaultTitle = "School Name | City, State" )
 #set ( $pageTitle = $_XPathTool.selectSingleNode($contentRoot, "//system-page[@current]/system-data-structure/headline") )
 #set ( $pageAltTitle = $_XPathTool.selectSingleNode($contentRoot, "//system-page[@current]/title") )
