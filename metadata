@@ -1,0 +1,37 @@
+#set ( $defaultTitle = "School Name | City, State" )
+#set ( $pageTitle = $_XPathTool.selectSingleNode($contentRoot, "//system-page[@current]/system-data-structure/headline") )
+#set ( $pageAltTitle = $_XPathTool.selectSingleNode($contentRoot, "//system-page[@current]/title") )
+#set ( $pageName = $_XPathTool.selectSingleNode($contentRoot, "//system-page[@current]/name") )
+#set ( $pagePath = $_XPathTool.selectSingleNode($contentRoot, "//system-page[@current]/path") )
+#set ( $topFolderTitle = $_XPathTool.selectSingleNode($contentRoot, "//system-folder/title") )
+#set ( $currFolderPath =  $_XPathTool.selectSingleNode($contentRoot, "//system-folder[@current]/path") )
+#set ( $currFolderTitle =  $_XPathTool.selectSingleNode($contentRoot, "//system-folder[@current]/title") )
+#set ( $divider = '|' )
+
+#macro ( pageReview )
+
+#if ( !$_StringTool.substringAfter($pagePath.value, "/").contains("index") )
+    #if ( !$pageTitle )
+        #set ( $pageTitle = $pageAltTitle )
+    #end
+    #if ( $_StringTool.substringAfter($pagePath.value, "/").contains("/") )
+        ${_SerializerTool.serialize($pageTitle, true)} ${divider}
+    #end
+#end
+
+#end
+
+#macro ( folderReview )
+
+#if ( $_StringTool.substringAfter($currFolderPath.value, "/").contains("/") )
+     #set ( $topFolderTitle = $_XPathTool.selectSingleNode($currFolderPath, "../system-folder/title") )
+     $_SerializerTool.serialize($currFolderTitle, true) ${divider} $_SerializerTool.serialize($topFolderTitle, true) ${divider} $defaultTitle
+#elseif ( $_StringTool.substringAfter($pagePath.value, "/").contains("/") )
+     $_SerializerTool.serialize($topFolderTitle, true) ${divider} $defaultTitle
+#else
+    $defaultTitle
+#end
+
+#end
+
+#pageReview #folderReview
