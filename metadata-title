@@ -1,4 +1,5 @@
 #* *****************
+Dynamic Metadata Title: pulls page information to create an SEO-rich page title
 
 Index Block Settings
 
@@ -36,7 +37,6 @@ Sort Order: Ascending
 #set ( $divider = '|' )
 
 #macro ( pageReview )
-
 #if ( !$_StringTool.substringAfter($pagePath.value, "/").contains("index") )
     #if ( !$pageTitle )
         #set ( $pageTitle = $pageAltTitle )
@@ -45,11 +45,9 @@ Sort Order: Ascending
         ${_SerializerTool.serialize($pageTitle, true)} ${divider}
     #end
 #end
-
 #end
 
 #macro ( folderReview )
-
 #if ( $_StringTool.substringAfter($currFolderPath.value, "/").contains("/") )
      #set ( $topFolderTitle = $_XPathTool.selectSingleNode($currFolderPath, "../system-folder/title") )
      $_SerializerTool.serialize($currFolderTitle, true) ${divider} $_SerializerTool.serialize($topFolderTitle, true) ${divider} $defaultTitle
@@ -58,7 +56,6 @@ Sort Order: Ascending
 #else
     $defaultTitle
 #end
-
 #end
 
 #pageReview #folderReview
