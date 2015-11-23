@@ -1,0 +1,30 @@
+#*
+Macros for tedious yet necessary tasks that take up space. #import for cleaner formats!
+*#
+
+## Provides image alt description, otherwise treats as a decorative image.
+#macro ( altCheck $img )
+    #set ( $imgtitle = $_XPathTool.selectSingleNode($img, "title").value )
+    #if( $!imgtitle && $imgtitle != "" )
+        alt="$_EscapeTool.xml($imgtitle)"
+    #else
+        alt=""
+    #end
+#end
+
+## Checks if the variable exists and is not blank. Prevents the $_Serializer script from showing up instead. Optional delimiter.
+#macro ( ifExist $thing $sep )
+#if ( $!thing && $thing != "" )${_SerializerTool.serialize($thing, true)}$!sep#end    
+#end
+
+## For the Link chooser that can be a file asset, page asset, or an external link (symlink)
+#macro ( linkPicker $link )
+    #set ( $linkType = $link.getAttribute("type") )
+    #if($linkType.value == 'symlink')
+        #set ( $sharedCtaLink = $_XPathTool.selectSingleNode($link, "content/system-symlink") )
+        href="$_EscapeTool.xml(${_SerializerTool.serialize($sharedCtaLink, true)})" target="_blank"
+    #else
+        #set ( $sharedCtaLink = $_XPathTool.selectSingleNode($link, "link") )
+        href="$_EscapeTool.xml(${_SerializerTool.serialize($sharedCtaLink, true)})"
+    #end
+#end
